@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Douglas Rodrigues | DG Solution Web</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#00d4aa">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DG Solution">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- PWA Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Meta Description -->
+  <meta name="description" content="Douglas Rodrigues - Desenvolvedor Web especialista em SaaS, PDV, Cardápios Digitais e Automações. Transformando ideias em soluções digitais impactantes.">
+  <meta name="keywords" content="desenvolvedor web, SaaS, PDV, cardápio digital, automação, React, Node.js">
+  
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head> html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfólio | Douglas Rodrigues</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <i class="fas fa-code"></i>
+        Douglas Rodrigues
+      </div>
+      <ul class="nav-links">
+        <li><a href="#sobre"><i class="fas fa-user"></i> Sobre</a></li>
+        <li><a href="#habilidades"><i class="fas fa-cogs"></i> Skills</a></li>
+        <li><a href="#projetos"><i class="fas fa-laptop-code"></i> Projetos</a></li>
+        <li><a href="#" onclick="openModal()"><i class="fab fa-whatsapp"></i> Contato</a></li>
+      </ul>
+      <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section id="hero">
+      <div class="hero-content">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-buttons">
+              <span class="btn-close"></span>
+              <span class="btn-minimize"></span>
+              <span class="btn-maximize"></span>
+            </div>
+          </div>
+          <div class="terminal-body">
+            <p><span class="prompt">$</span> whoami</p>
+            <p class="typing-animation">Douglas Rodrigues - Desenvolvedor Web & SaaS Creator</p>
+            <p><span class="prompt">$</span> ls skills/</p>
+            <p class="typing-animation">React • Next.js • Node.js • Supabase • MySQL • PHP</p>
+            <p><span class="prompt">$</span> ./mission.sh</p>
+            <p class="typing-animation">Transformando ideias em soluções digitais impactantes! 🚀</p>
+          </div>
+        </div>
+        <h1>Olá, eu sou <span class="highlight">Douglas Rodrigues</span></h1>
+        <p class="subtitle">Desenvolvedor Web & Criador de Soluções SaaS</p>
+        <div class="hero-buttons">
+          <a href="#projetos" class="btn btn-primary">
+            <i class="fas fa-code"></i> Ver Projetos
+          </a>
+          <a href="#" onclick="openModal()" class="btn btn-secondary">
+            <i class="fab fa-whatsapp"></i> Vamos conversar
+          </a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <div class="code-bg">
+          <img src="assets/eu.jpg" alt="Douglas Rodrigues - Desenvolvedor Web">
+          <div class="floating-icons">
+            <i class="fab fa-react"></i>
+            <i class="fab fa-node-js"></i>
+            <i class="fab fa-php"></i>
+            <i class="fas fa-database"></i>
+            <i class="fab fa-git-alt"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="sobre">
+      <div class="section-header">
+        <h2><i class="fas fa-user-code"></i> Sobre Mim</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Sou Douglas Rodrigues, desenvolvedor web e criador de soluções digitais que conectam tecnologia e negócios. Tenho experiência no desenvolvimento de sistemas SaaS, e-commerces, PDVs completos, cardápios digitais, landing pages e automações com IA, sempre focado em gerar resultados reais para empresas.</p>
+          <p> Trabalho com stacks modernas como React, Next.js, Vite, Node.js, Supabase, MySQL e PHP, unindo performance e escalabilidade para criar plataformas que vão desde sistemas de gestão para prefeituras até aplicativos de delivery e adegas digitais.</p>
+          <p> Minha missão é transformar ideias em soluções práticas, ajudando empreendedores, empresas e órgãos públicos a se digitalizarem de forma ágil, eficiente e impactante.</p>
+          <div class="stats">
+            <div class="stat-item">
+              <h3>40+</h3>
+              <p>Projetos</p>
+            </div>
+            <div class="stat-item">
+              <h3>3+</h3>
+              <p>Anos</p>
+            </div>
+            <div class="stat-item">
+              <h3>100%</h3>
+              <p>Dedicação</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-code">
+          <div class="code-snippet">
+            <div class="code-header">
+              <span>douglas.js</span>
+            </div>
+            <pre><code><span class="keyword">const</span> <span class="variable">developer</span> = {
+  <span class="property">name</span>: <span class="string">'Douglas Rodrigues'</span>,
+  <span class="property">skills</span>: [<span class="string">'React'</span>, <span class="string">'Next.js'</span>, <span class="string">'Node.js'</span>, <span class="string">'SaaS'</span>],
+  <span class="property">passion</span>: <span class="string">'Soluções digitais impactantes'</span>,
+  <span class="property">worksWith</span>: [<span class="string">'Startups'</span>, <span class="string">'Empresas'</span>, <span class="string">'Órgãos Públicos'</span>],
+  <span class="property">mission</span>: <span class="string">'Digitalizar negócios'</span>,
+  <span class="property">available</span>: <span class="boolean">true</span>
+};</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="habilidades">
+      <div class="section-header">
+        <h2><i class="fas fa-cogs"></i> Stack Tecnológico</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="skills-container">
+        <div class="skill-category">
+          <h3><i class="fas fa-laptop-code"></i> Frontend</h3>
+          <div class="skills">
+            <div class="skill"><i class="fab fa-react"></i> React</div>
+            <div class="skill"><i class="fas fa-bolt"></i> Next.js</div>
+            <div class="skill"><i class="fas fa-rocket"></i> Vite</div>
+            <div class="skill"><i class="fab fa-js-square"></i> JavaScript</div>
+            <div class="skill"><i class="fab fa-css3-alt"></i> CSS3</div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-server"></i> Backend</h3>
+          <div class="skills">
+            <div class="skill"><i class="fab fa-node-js"></i> Node.js</div>
+            <div class="skill"><i class="fab fa-php"></i> PHP</div>
+            <div class="skill"><i class="fas fa-database"></i> Supabase</div>
+            <div class="skill"><i class="fas fa-database"></i> MySQL</div>
+            <div class="skill"><i class="fas fa-cloud"></i> APIs REST</div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-cogs"></i> Soluções</h3>
+          <div class="skills">
+            <div class="skill"><i class="fas fa-shopping-cart"></i> SaaS</div>
+            <div class="skill"><i class="fas fa-cash-register"></i> PDV</div>
+            <div class="skill"><i class="fas fa-mobile-alt"></i> PWA</div>
+            <div class="skill"><i class="fas fa-robot"></i> IA</div>
+            <div class="skill"><i class="fab fa-git-alt"></i> Git</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="projetos">
+      <div class="section-header">
+        <h2><i class="fas fa-laptop-code"></i> Projetos em Destaque</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="projects">
+        <div class="project-card">
+          <div class="project-image">
+            <img src="assets/pdv-system.png" alt="Sistema PDV Completo">
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="https://app.dgsolutionweb.com" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/dgsolutionweb" target="_blank" class="project-link"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Sistema PDV Completo</h3>
+            <p>Plataforma SaaS completa para gestão de vendas, estoque, clientes e relatórios. Sistema robusto com dashboard em tempo real, múltiplos usuários e integração com pagamentos.</p>
+            <div class="project-tech">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">Supabase</span>
+              <span class="tech-tag">SaaS</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="assets/cardapio-adega.png" alt="Cardápio Digital Adega">
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="https://adegadoscria.dgsolutionweb.com" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/dgsolutionweb" target="_blank" class="project-link"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Cardápio Digital Adega</h3>
+            <p>Sistema de cardápio digital interativo para adegas e distribuidoras. Interface elegante com busca avançada, categorias e integração WhatsApp para pedidos.</p>
+            <div class="project-tech">
+              <span class="tech-tag">Next.js</span>
+              <span class="tech-tag">MySQL</span>
+              <span class="tech-tag">PWA</span>
+              <span class="tech-tag">WhatsApp API</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-image">
+            <img src="assets/cartoes-digitais.png" alt="Criador de Cartões Digitais">
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="https://cdcards.vercel.app" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                <a href="https://github.com/dgsolutionweb" target="_blank" class="project-link"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="project-content">
+            <h3>Criador de Cartões Digitais</h3>
+            <p>Plataforma para criação de cartões de visita digitais personalizados. Templates modernos, QR codes automáticos e compartilhamento direto nas redes sociais.</p>
+            <div class="project-tech">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Vite</span>
+              <span class="tech-tag">Canvas API</span>
+              <span class="tech-tag">QR Code</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-left">
+        <div class="logo">
+          <i class="fas fa-code"></i>
+          DG Solution Web
+        </div>
+        <p>Desenvolvendo o futuro, uma solução digital por vez.</p>
+      </div>
+      <div class="footer-right">
+        <div class="social-links">
+          <a href="https://github.com/dgsolutionweb" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/douglas-rodrigues-b2513a380" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://instagram.com/douuglinha95" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#" onclick="openModal()"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Douglas Rodrigues - DG Solution Web. Feito com <i class="fas fa-heart"></i> e muito <i class="fas fa-coffee"></i></p>
+    </div>
+  </footer>
+
+  <!-- Modal WhatsApp -->
+  <div id="whatsappModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fab fa-whatsapp"></i> Vamos conversar!</h3>
+        <span class="close" onclick="closeModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>Escolha uma das opções abaixo ou envie uma mensagem personalizada:</p>
+        <div class="quick-messages">
+          <button onclick="sendWhatsApp('Olá Douglas! Gostaria de conversar sobre desenvolvimento de um sistema SaaS.')" class="quick-btn">
+            <i class="fas fa-briefcase"></i> Sistema SaaS
+          </button>
+          <button onclick="sendWhatsApp('Oi Douglas! Vi seus projetos e gostaria de discutir uma parceria.')" class="quick-btn">
+            <i class="fas fa-handshake"></i> Parceria
+          </button>
+          <button onclick="sendWhatsApp('Olá! Preciso de um sistema PDV ou cardápio digital. Vamos conversar?')" class="quick-btn">
+            <i class="fas fa-store"></i> PDV/Cardápio
+          </button>
+        </div>
+        <div class="custom-message">
+          <textarea id="customMessage" placeholder="Ou digite sua mensagem personalizada..."></textarea>
+          <button onclick="sendCustomMessage()" class="btn btn-whatsapp">
+            <i class="fab fa-whatsapp"></i> Enviar no WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/script.js"></script>
+</body>
+</html>

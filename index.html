@@ -105,20 +105,20 @@
           </div>
           <div class="weather-content">
             <h3>Como está o clima hoje?</h3>
-            <p>Descubra a temperatura atual da sua localização</p>
-            <button id="getWeatherBtn" class="btn btn-weather">
-              <i class="fas fa-map-marker-alt"></i>
-              Qual temperatura hoje?
-            </button>
-            <div class="weather-alternative">
-              <p>ou</p>
-              <button id="manualLocationBtn" class="btn btn-secondary-small">
-                <i class="fas fa-city"></i>
-                Buscar por cidade
-              </button>
+            <p>Descubra a temperatura de qualquer cidade brasileira</p>
+            <div class="quick-cities">
+              <p>Busca rápida:</p>
+              <div class="city-buttons">
+                <button class="city-btn" onclick="searchQuickCity('São Paulo, BR')">São Paulo</button>
+                <button class="city-btn" onclick="searchQuickCity('Rio de Janeiro, BR')">Rio de Janeiro</button>
+                <button class="city-btn" onclick="searchQuickCity('Belo Horizonte, BR')">Belo Horizonte</button>
+                <button class="city-btn" onclick="searchQuickCity('Brasília, BR')">Brasília</button>
+                <button class="city-btn" onclick="searchQuickCity('Salvador, BR')">Salvador</button>
+                <button class="city-btn" onclick="searchQuickCity('Curitiba, BR')">Curitiba</button>
+              </div>
             </div>
           </div>
-          <div id="manualLocationInput" class="manual-location hidden">
+          <div class="manual-location">
             <div class="input-group">
               <input type="text" id="cityInput" placeholder="Digite o nome da cidade (ex: São Paulo, BR)" />
               <button id="searchCityBtn" class="btn btn-primary-small">

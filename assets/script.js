@@ -1,6 +1,22 @@
 // Configuração do WhatsApp (SUBSTITUA pelo seu número)
 const WHATSAPP_NUMBER = "5517999754390"; // Formato: código do país + DDD + número
 
+// Remove any orphan 'html>' text that might appear
+setTimeout(() => {
+  const bodyTextNodes = [];
+  const walker = document.createTreeWalker(
+    document.body.parentNode,
+    NodeFilter.SHOW_TEXT
+  );
+  
+  let node;
+  while (node = walker.nextNode()) {
+    if (node.nodeValue && node.nodeValue.includes('html>')) {
+      node.nodeValue = node.nodeValue.replace('html>', '');
+    }
+  }
+}, 100);
+
 // PWA Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -551,21 +567,8 @@ const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 function initWeatherWidget() {
   console.log('Initializing weather widget...');
-  const getWeatherBtn = document.getElementById('getWeatherBtn');
-  const manualLocationBtn = document.getElementById('manualLocationBtn');
   const searchCityBtn = document.getElementById('searchCityBtn');
   const cityInput = document.getElementById('cityInput');
-  
-  if (getWeatherBtn) {
-    console.log('Weather button found, adding event listener');
-    getWeatherBtn.addEventListener('click', requestWeatherData);
-  } else {
-    console.warn('Weather button not found - widget may not be initialized');
-  }
-  
-  if (manualLocationBtn) {
-    manualLocationBtn.addEventListener('click', toggleManualLocation);
-  }
   
   if (searchCityBtn) {
     searchCityBtn.addEventListener('click', searchWeatherByCity);
@@ -580,25 +583,13 @@ function initWeatherWidget() {
   }
 }
 
-function toggleManualLocation() {
-  const manualLocation = document.getElementById('manualLocationInput');
-  const btn = document.getElementById('manualLocationBtn');
-  
-  if (manualLocation.classList.contains('hidden')) {
-    manualLocation.classList.remove('hidden');
-    manualLocation.classList.add('show');
-    btn.innerHTML = '<i class="fas fa-times"></i> Cancelar';
-    
-    // Focus on input
-    setTimeout(() => {
-      document.getElementById('cityInput').focus();
-    }, 100);
-  } else {
-    manualLocation.classList.add('hidden');
-    manualLocation.classList.remove('show');
-    btn.innerHTML = '<i class="fas fa-city"></i> Buscar por cidade';
-    document.getElementById('cityInput').value = '';
+// Quick city search function
+function searchQuickCity(cityName) {
+  const cityInput = document.getElementById('cityInput');
+  if (cityInput) {
+    cityInput.value = cityName;
   }
+  searchWeatherByCity();
 }
 
 async function searchWeatherByCity() {
@@ -678,377 +669,137 @@ async function fetchWeatherDataByCity(city) {
   }
 }
 
-async function requestWeatherData() {
-  console.log('Weather request started...');
-  const btn = document.getElementById('getWeatherBtn');
-  const result = document.getElementById('weatherResult');
+// Weather Widget - City Search Only
+async function searchWeatherByCity() {
+  const cityInput = document.getElementById('cityInput');
+  const searchCityBtn = document.getElementById('searchCityBtn');
+  const weatherResult = document.getElementById('weatherResult');
   
-  // Check if elements exist
-  if (!btn) {
-    console.error('Weather button not found');
+  if (!cityInput || !cityInput.value.trim()) {
+    showToast('❌ Por favor, digite o nome de uma cidade', 3000);
     return;
   }
   
-  // Check if geolocation is supported
-  if (!navigator.geolocation) {
-    console.error('Geolocation not supported');
-    showWeatherError('Geolocalização não é suportada neste navegador.');
-    return;
-  }
+  const cityName = cityInput.value.trim();
   
-  // Add loading state
-  btn.classList.add('loading');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Obtendo localização...';
-  
-  // Haptic feedback
-  if ('vibrate' in navigator) {
-    navigator.vibrate(50);
+  // Show loading state
+  if (searchCityBtn) {
+    searchCityBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    searchCityBtn.disabled = true;
   }
   
   try {
-    console.log('Requesting user location...');
-    // Request user location
-    const position = await getCurrentPosition();
-    console.log('Location received:', position.coords);
-    const { latitude, longitude } = position.coords;
-    
-    // Update button text
-    btn.innerHTML = '<i class="fas fa-cloud-sun"></i> Buscando clima...';
-    
-    console.log('Fetching weather data for:', latitude, longitude);
-    // Fetch weather data
-    const weatherData = await fetchWeatherData(latitude, longitude);
-    console.log('Weather data received:', weatherData);
-    
-    // Display weather information
-    displayWeatherData(weatherData);
-    
-    // Show success message
+    const weatherData = await fetchWeatherDataByCity(cityName);
+    updateWeatherInfo(weatherData);
     showToast('🌤️ Clima atualizado com sucesso!');
-    
   } catch (error) {
-    console.error('Error getting weather:', error);
-    
-    // More detailed error handling
-    let errorMessage = 'Erro ao obter dados meteorológicos. Tente novamente.';
-    
-    if (error.code) {
-      // Geolocation errors
-      switch (error.code) {
-        case 1: // PERMISSION_DENIED
-          errorMessage = `
-            🔐 Permissão de localização negada. 
-            
-            Para ativar:
-            • Chrome: Clique no ícone 🔒 na barra de endereço
-            • Firefox: Clique no ícone 🛡️ ao lado da URL
-            • Safari: Configurações > Privacidade > Localização
-            
-            Ou use a opção "Buscar por cidade" abaixo.
-          `;
-          
-          // Show custom permission toast
-          showPermissionToast();
-          
-          // Show manual location option
-          setTimeout(() => {
-            const manualBtn = document.getElementById('manualLocationBtn');
-            if (manualBtn) {
-              manualBtn.style.background = 'var(--primary-color)';
-              manualBtn.style.color = 'white';
-              manualBtn.style.animation = 'pulse 2s infinite';
-            }
-          }, 1000);
-          return; // Don't show the regular error, we're showing custom toast
-          break;
-        case 2: // POSITION_UNAVAILABLE
-          errorMessage = 'Localização indisponível. Verifique sua conexão GPS ou use "Buscar por cidade".';
-          break;
-        case 3: // TIMEOUT
-          errorMessage = 'Tempo limite excedido. Tente novamente ou use "Buscar por cidade".';
-          break;
-      }
-    } else if (error.message) {
-      // API errors
-      if (error.message.includes('HTTP 401')) {
-        errorMessage = 'Erro de autenticação da API. Verifique a chave da API.';
-      } else if (error.message.includes('HTTP 404')) {
-        errorMessage = 'Localização não encontrada.';
-      } else if (error.message.includes('HTTP')) {
-        errorMessage = 'Erro no serviço de clima. Tente novamente em alguns minutos.';
-      } else if (error.message.includes('Failed to fetch')) {
-        errorMessage = 'Erro de conexão. Verifique sua internet.';
-      }
-    }
-    
-    showWeatherError(errorMessage);
+    console.error('Error fetching weather:', error);
+    showToast('❌ Cidade não encontrada. Verifique o nome e tente novamente.', 4000);
   } finally {
-    // Reset button
-    btn.classList.remove('loading');
-    btn.innerHTML = '<i class="fas fa-sync-alt"></i> Atualizar';
+    if (searchCityBtn) {
+      searchCityBtn.innerHTML = '<i class="fas fa-search"></i>';
+      searchCityBtn.disabled = false;
+    }
   }
 }
 
-function getCurrentPosition() {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      resolve,
-      reject,
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 300000 // 5 minutes cache
-      }
-    );
-  });
-}
-
-async function fetchWeatherData(lat, lon) {
-  try {
-    const url = `${WEATHER_API_URL}?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric&lang=pt_br`;
-    
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('API Error Response:', errorText);
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    
-    // Validate response data
-    if (!data || !data.main || !data.weather || !data.weather[0]) {
-      throw new Error('Dados de clima inválidos recebidos da API');
-    }
-    
-    return data;
-  } catch (error) {
-    console.error('Fetch weather error:', error);
-    throw error;
+async function fetchWeatherDataByCity(cityName) {
+  const url = `${WEATHER_API_URL}?q=${encodeURIComponent(cityName)}&appid=${WEATHER_API_KEY}&units=metric&lang=pt_br`;
+  
+  const response = await fetch(url);
+  
+  if (!response.ok) {
+    throw new Error(`Erro na API: ${response.status}`);
   }
+  
+  const data = await response.json();
+  
+  if (!data || !data.main || !data.weather || !data.weather[0]) {
+    throw new Error('Dados inválidos recebidos da API');
+  }
+  
+  return data;
 }
 
-function displayWeatherData(data) {
-  const result = document.getElementById('weatherResult');
+function updateWeatherInfo(data) {
+  const location = data.name;
+  const temperature = Math.round(data.main.temp);
+  const description = data.weather[0].description;
+  const humidity = data.main.humidity;
+  const feelsLike = Math.round(data.main.feels_like);
+  const windSpeed = Math.round((data.wind?.speed || 0) * 3.6); // Convert m/s to km/h
+  
+  // Update the existing HTML elements
   const tempValue = document.getElementById('tempValue');
   const weatherDesc = document.getElementById('weatherDesc');
   const cityName = document.getElementById('cityName');
-  const humidity = document.getElementById('humidity');
-  const windSpeed = document.getElementById('windSpeed');
-  const feelsLike = document.getElementById('feelsLike');
-  const updateTime = document.getElementById('updateTime');
+  const humidityEl = document.getElementById('humidity');
+  const windSpeedEl = document.getElementById('windSpeed');
+  const feelsLikeEl = document.getElementById('feelsLike');
+  const updateTimeEl = document.getElementById('updateTime');
+  const weatherResult = document.getElementById('weatherResult');
   
-  // Check if all elements exist
-  if (!result || !tempValue || !weatherDesc || !cityName || !humidity || !windSpeed || !feelsLike || !updateTime) {
-    console.error('Missing weather display elements');
-    showToast('❌ Erro na interface do widget', 3000);
-    return;
-  }
-  
-  try {
-    // Populate data with safe fallbacks
-    tempValue.textContent = Math.round(data.main?.temp || 0);
-    weatherDesc.textContent = capitalizeFirstLetter(data.weather?.[0]?.description || 'N/A');
-    cityName.textContent = `${data.name || 'Cidade'}, ${data.sys?.country || 'País'}`;
-    humidity.textContent = data.main?.humidity || 0;
-    windSpeed.textContent = Math.round((data.wind?.speed || 0) * 3.6); // Convert m/s to km/h
-    feelsLike.textContent = Math.round(data.main?.feels_like || 0);
-    updateTime.textContent = new Date().toLocaleTimeString('pt-BR', {
+  if (tempValue) tempValue.textContent = temperature;
+  if (weatherDesc) weatherDesc.textContent = capitalizeFirstLetter(description);
+  if (cityName) cityName.textContent = `${location}, ${data.sys?.country || 'BR'}`;
+  if (humidityEl) humidityEl.textContent = humidity;
+  if (windSpeedEl) windSpeedEl.textContent = windSpeed;
+  if (feelsLikeEl) feelsLikeEl.textContent = feelsLike;
+  if (updateTimeEl) {
+    updateTimeEl.textContent = new Date().toLocaleTimeString('pt-BR', {
       hour: '2-digit',
       minute: '2-digit'
     });
-    
-    // Update weather icon based on conditions
-    updateWeatherIcon(data.weather?.[0]?.icon || '01d');
-    
-    // Show result with animation
-    result.classList.remove('hidden');
+  }
+  
+  // Show the weather result
+  if (weatherResult) {
+    weatherResult.classList.remove('hidden');
     setTimeout(() => {
-      result.classList.add('show');
+      weatherResult.classList.add('show');
     }, 100);
-    
-  } catch (error) {
-    console.error('Error displaying weather data:', error);
-    showWeatherError('Erro ao exibir dados do clima');
   }
-}
-
-function updateWeatherIcon(iconCode) {
-  const weatherIcon = document.querySelector('.weather-icon i');
-  
-  if (!weatherIcon) {
-    console.warn('Weather icon element not found');
-    return;
-  }
-  
-  // Map weather icons to Font Awesome icons
-  const iconMap = {
-    '01d': 'fas fa-sun', // clear sky day
-    '01n': 'fas fa-moon', // clear sky night
-    '02d': 'fas fa-cloud-sun', // few clouds day
-    '02n': 'fas fa-cloud-moon', // few clouds night
-    '03d': 'fas fa-cloud', // scattered clouds
-    '03n': 'fas fa-cloud',
-    '04d': 'fas fa-cloud', // broken clouds
-    '04n': 'fas fa-cloud',
-    '09d': 'fas fa-cloud-rain', // shower rain
-    '09n': 'fas fa-cloud-rain',
-    '10d': 'fas fa-cloud-sun-rain', // rain day
-    '10n': 'fas fa-cloud-moon-rain', // rain night
-    '11d': 'fas fa-bolt', // thunderstorm
-    '11n': 'fas fa-bolt',
-    '13d': 'fas fa-snowflake', // snow
-    '13n': 'fas fa-snowflake',
-    '50d': 'fas fa-smog', // mist
-    '50n': 'fas fa-smog'
-  };
-  
-  const newIcon = iconMap[iconCode] || 'fas fa-thermometer-half';
-  weatherIcon.className = newIcon;
-}
-
-function showWeatherError(message) {
-  const result = document.getElementById('weatherResult');
-  const tempValue = document.getElementById('tempValue');
-  const weatherDesc = document.getElementById('weatherDesc');
-  const cityName = document.getElementById('cityName');
-  
-  tempValue.textContent = '❌';
-  weatherDesc.textContent = 'Erro';
-  cityName.textContent = message;
-  
-  document.getElementById('humidity').textContent = '--';
-  document.getElementById('windSpeed').textContent = '--';
-  document.getElementById('feelsLike').textContent = '--';
-  document.getElementById('updateTime').textContent = '--';
-  
-  result.classList.remove('hidden');
-  setTimeout(() => {
-    result.classList.add('show');
-  }, 100);
-  
-  showToast('❌ ' + message, 5000);
 }
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function showPermissionToast() {
-  // Remove existing toast
-  const existingToast = document.querySelector('.permission-toast');
-  if (existingToast) {
-    existingToast.remove();
+// Quick city search function
+function searchQuickCity(cityName) {
+  const cityInput = document.getElementById('cityInput');
+  if (cityInput) {
+    cityInput.value = cityName;
+  }
+  searchWeatherByCity();
+}
+
+function showWeatherError(message) {
+  // Update the existing elements to show error state
+  const tempValue = document.getElementById('tempValue');
+  const weatherDesc = document.getElementById('weatherDesc');
+  const cityName = document.getElementById('cityName');
+  const humidityEl = document.getElementById('humidity');
+  const windSpeedEl = document.getElementById('windSpeed');
+  const feelsLikeEl = document.getElementById('feelsLike');
+  const updateTimeEl = document.getElementById('updateTime');
+  const weatherResult = document.getElementById('weatherResult');
+  
+  if (tempValue) tempValue.textContent = '--';
+  if (weatherDesc) weatherDesc.textContent = 'Erro';
+  if (cityName) cityName.textContent = message;
+  if (humidityEl) humidityEl.textContent = '--';
+  if (windSpeedEl) windSpeedEl.textContent = '--';
+  if (feelsLikeEl) feelsLikeEl.textContent = '--';
+  if (updateTimeEl) updateTimeEl.textContent = '--';
+  
+  // Show the weather result with error
+  if (weatherResult) {
+    weatherResult.classList.remove('hidden');
+    setTimeout(() => {
+      weatherResult.classList.add('show');
+    }, 100);
   }
   
-  const toast = document.createElement('div');
-  toast.className = 'permission-toast';
-  toast.innerHTML = `
-    <div class="permission-toast-content">
-      <div class="permission-icon">🔐</div>
-      <div class="permission-text">
-        <h4>Permissão de localização negada</h4>
-        <p>Para ativar, clique no ícone 🔒 na barra de endereço ou use a busca por cidade abaixo.</p>
-      </div>
-      <button onclick="this.parentElement.parentElement.remove()" class="permission-close">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-  `;
-  
-  // Add toast styles
-  toast.style.cssText = `
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: #ff6b6b;
-    color: white;
-    padding: 0;
-    border-radius: 15px;
-    z-index: 10000;
-    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
-    max-width: 90%;
-    min-width: 300px;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  `;
-  
-  // Style the content
-  const contentStyle = `
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    gap: 1rem;
-  `;
-  
-  const iconStyle = `
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  `;
-  
-  const textStyle = `
-    flex: 1;
-  `;
-  
-  const h4Style = `
-    margin: 0 0 0.25rem 0;
-    font-size: 1rem;
-    font-weight: 600;
-  `;
-  
-  const pStyle = `
-    margin: 0;
-    font-size: 0.85rem;
-    opacity: 0.9;
-    line-height: 1.3;
-  `;
-  
-  const closeStyle = `
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  `;
-  
-  // Apply styles
-  const content = toast.querySelector('.permission-toast-content');
-  const icon = toast.querySelector('.permission-icon');
-  const text = toast.querySelector('.permission-text');
-  const h4 = toast.querySelector('h4');
-  const p = toast.querySelector('p');
-  const closeBtn = toast.querySelector('.permission-close');
-  
-  content.style.cssText = contentStyle;
-  icon.style.cssText = iconStyle;
-  text.style.cssText = textStyle;
-  h4.style.cssText = h4Style;
-  p.style.cssText = pStyle;
-  closeBtn.style.cssText = closeStyle;
-  
-  document.body.appendChild(toast);
-  
-  // Animate in
-  setTimeout(() => {
-    toast.style.transform = 'translateX(-50%) translateY(0)';
-  }, 10);
-  
-  // Auto remove after 8 seconds
-  setTimeout(() => {
-    if (toast.parentNode) {
-      toast.style.transform = 'translateX(-50%) translateY(-100px)';
-      setTimeout(() => {
-        if (toast.parentNode) {
-          toast.parentNode.removeChild(toast);
-        }
-      }, 300);
-    }
-  }, 8000);
+  showToast('❌ ' + message, 4000);
 }

@@ -110,43 +110,165 @@ function initMobileOptimizations() {
 function initMobileNavigation() {
   let touchStartY = 0;
   let touchEndY = 0;
+  let isRefreshing = false;
   
-  // Pull to refresh gesture
+  // Improved pull-to-refresh with visual feedback
   document.addEventListener('touchstart', e => {
     touchStartY = e.changedTouches[0].screenY;
-  });
+  }, { passive: true });
+  
+  document.addEventListener('touchmove', e => {
+    if (window.scrollY === 0 && !isRefreshing) {
+      const currentY = e.changedTouches[0].screenY;
+      const pullDistance = currentY - touchStartY;
+      
+      if (pullDistance > 50) {
+        showRefreshIndicator(Math.min(pullDistance / 150, 1));
+      }
+    }
+  }, { passive: true });
   
   document.addEventListener('touchend', e => {
     touchEndY = e.changedTouches[0].screenY;
     handlePullToRefresh();
-  });
+  }, { passive: true });
   
   function handlePullToRefresh() {
-    if (touchEndY - touchStartY > 100 && window.scrollY === 0) {
-      // Show refresh indicator
-      showRefreshIndicator();
-      // Simulate refresh
-      setTimeout(() => {
-        hideRefreshIndicator();
-        // Reload if needed
-        // location.reload();
-      }, 1500);
+    const pullDistance = touchEndY - touchStartY;
+    
+    if (pullDistance > 120 && window.scrollY === 0 && !isRefreshing) {
+      isRefreshing = true;
+      triggerRefresh();
+    } else {
+      hideRefreshIndicator();
     }
   }
   
-  function showRefreshIndicator() {
-    const indicator = document.createElement('div');
-    indicator.className = 'refresh-indicator show';
-    indicator.innerHTML = '<i class="fas fa-sync fa-spin"></i> Atualizando...';
-    document.body.appendChild(indicator);
+  function showRefreshIndicator(progress = 1) {
+    let indicator = document.querySelector('.refresh-indicator');
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.className = 'refresh-indicator';
+      document.body.appendChild(indicator);
+    }
+    
+    const rotation = progress * 360;
+    indicator.innerHTML = `<i class="fas fa-sync" style="transform: rotate(${rotation}deg); transition: transform 0.1s ease;"></i> ${progress >= 1 ? 'Solte para atualizar' : 'Puxe para atualizar'}`;
+    indicator.classList.add('show');
+    indicator.style.opacity = Math.min(progress, 1);
+  }
+  
+  function triggerRefresh() {
+    const indicator = document.querySelector('.refresh-indicator');
+    if (indicator) {
+      indicator.innerHTML = '<i class="fas fa-sync fa-spin"></i> Atualizando...';
+      
+      // Haptic feedback
+      if ('vibrate' in navigator) {
+        navigator.vibrate([100, 50, 100]);
+      }
+      
+      // Simulate refresh
+      setTimeout(() => {
+        hideRefreshIndicator();
+        isRefreshing = false;
+        
+        // Show success feedback
+        showToast('Conteúdo atualizado!');
+      }, 1500);
+    }
   }
   
   function hideRefreshIndicator() {
     const indicator = document.querySelector('.refresh-indicator');
     if (indicator) {
-      indicator.remove();
+      indicator.classList.remove('show');
+      setTimeout(() => {
+        if (indicator.parentNode) {
+          indicator.parentNode.removeChild(indicator);
+        }
+      }, 300);
     }
   }
+  
+  // Swipe gestures for modal
+  let startX = 0;
+  let startY = 0;
+  
+  document.addEventListener('touchstart', e => {
+    startX = e.changedTouches[0].screenX;
+    startY = e.changedTouches[0].screenY;
+  }, { passive: true });
+  
+  document.addEventListener('touchend', e => {
+    const modal = document.getElementById('whatsappModal');
+    if (modal && modal.style.display === 'block') {
+      const endX = e.changedTouches[0].screenX;
+      const endY = e.changedTouches[0].screenY;
+      const deltaX = endX - startX;
+      const deltaY = endY - startY;
+      
+      // Swipe down to close modal
+      if (deltaY > 100 && Math.abs(deltaX) < 50) {
+        closeModal();
+      }
+    }
+  }, { passive: true });
+}
+
+// Toast notification system
+function showToast(message, duration = 3000) {
+  // Remove existing toast
+  const existingToast = document.querySelector('.toast');
+  if (existingToast) {
+    existingToast.remove();
+  }
+  
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <i class="fas fa-check-circle"></i>
+    <span>${message}</span>
+  `;
+  
+  // Add toast styles
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 10000;
+    box-shadow: 0 8px 32px rgba(0, 212, 170, 0.3);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    max-width: 90%;
+    text-align: center;
+  `;
+  
+  document.body.appendChild(toast);
+  
+  // Animate in
+  setTimeout(() => {
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+  }, 10);
+  
+  // Auto remove
+  setTimeout(() => {
+    toast.style.transform = 'translateX(-50%) translateY(-100px)';
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, duration);
 }
 
 // Status Bar Color Management
@@ -189,17 +311,32 @@ function loadTheme() {
   }
 }
 
-// Modal do WhatsApp
+// Modal do WhatsApp com animações suaves
 function openModal() {
   const modal = document.getElementById('whatsappModal');
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
+  
+  // Add show class for mobile animation
+  setTimeout(() => {
+    modal.classList.add('show');
+  }, 10);
+  
+  // Haptic feedback on mobile
+  if ('vibrate' in navigator) {
+    navigator.vibrate(10);
+  }
 }
 
 function closeModal() {
   const modal = document.getElementById('whatsappModal');
-  modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
+  modal.classList.remove('show');
+  
+  // Wait for animation to complete
+  setTimeout(() => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }, 400);
 }
 
 // Enviar mensagem rápida para WhatsApp
@@ -349,4 +486,58 @@ window.addEventListener('load', () => {
   if (window.matchMedia('(display-mode: standalone)').matches) {
     document.body.classList.add('pwa-loaded');
   }
+});
+
+// Enhanced smooth scroll with haptic feedback
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    
+    // Haptic feedback for navigation
+    if ('vibrate' in navigator) {
+      navigator.vibrate(30);
+    }
+    
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      // Animate scroll with easing
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      
+      // Update URL without triggering navigation
+      history.pushState(null, null, this.getAttribute('href'));
+      
+      // Add visual feedback to clicked link
+      this.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        this.style.transform = '';
+      }, 150);
+    }
+  });
+});
+
+// Initialize all mobile enhancements
+document.addEventListener('DOMContentLoaded', () => {
+  initMobileNavigation();
+  initScrollReveal();
+  
+  // Preload critical images for better performance
+  const criticalImages = [
+    'assets/eu.jpg',
+    'assets/projeto1.jpg',
+    'assets/projeto2.jpg',
+    'assets/projeto3.jpg'
+  ];
+  
+  criticalImages.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+  
+  // Add loading state management
+  window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+  });
 });

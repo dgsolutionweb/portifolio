@@ -76,7 +76,7 @@ Portfólio profissional que funciona como um **aplicativo nativo** em smartphone
 ### 1. WhatsApp
 Configure seu número no arquivo `assets/script.js`:
 ```javascript
-const WHATSAPP_NUMBER = "5517909975439";
+const WHATSAPP_NUMBER = "5517999754390";
 ```
 
 ### 2. PWA Icons

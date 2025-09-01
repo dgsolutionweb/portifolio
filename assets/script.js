@@ -1,5 +1,5 @@
 // Configuração do WhatsApp (SUBSTITUA pelo seu número)
-const WHATSAPP_NUMBER = "5517909975439"; // Formato: código do país + DDD + número
+const WHATSAPP_NUMBER = "5517999754390"; // Formato: código do país + DDD + número
 
 // PWA Service Worker Registration
 if ('serviceWorker' in navigator) {

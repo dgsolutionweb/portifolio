@@ -95,6 +95,74 @@
         </div>
       </div>
     </section>
+
+    <!-- Widget de Temperatura -->
+    <section id="weather" class="weather-widget">
+      <div class="container">
+        <div class="weather-card">
+          <div class="weather-icon">
+            <i class="fas fa-thermometer-half"></i>
+          </div>
+          <div class="weather-content">
+            <h3>Como está o clima hoje?</h3>
+            <p>Descubra a temperatura atual da sua localização</p>
+            <button id="getWeatherBtn" class="btn btn-weather">
+              <i class="fas fa-map-marker-alt"></i>
+              Qual temperatura hoje?
+            </button>
+            <div class="weather-alternative">
+              <p>ou</p>
+              <button id="manualLocationBtn" class="btn btn-secondary-small">
+                <i class="fas fa-city"></i>
+                Buscar por cidade
+              </button>
+            </div>
+          </div>
+          <div id="manualLocationInput" class="manual-location hidden">
+            <div class="input-group">
+              <input type="text" id="cityInput" placeholder="Digite o nome da cidade (ex: São Paulo, BR)" />
+              <button id="searchCityBtn" class="btn btn-primary-small">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+          <div id="weatherResult" class="weather-result hidden">
+            <div class="weather-info">
+              <div class="temperature">
+                <span id="tempValue">--</span>°C
+              </div>
+              <div class="weather-details">
+                <div class="detail-item">
+                  <i class="fas fa-eye"></i>
+                  <span id="weatherDesc">--</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-location-dot"></i>
+                  <span id="cityName">--</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-droplet"></i>
+                  <span id="humidity">--</span>% umidade
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-wind"></i>
+                  <span id="windSpeed">--</span> km/h
+                </div>
+              </div>
+              <div class="weather-extra">
+                <div class="feels-like">
+                  Sensação térmica: <span id="feelsLike">--</span>°C
+                </div>
+                <div class="update-time">
+                  Atualizado em: <span id="updateTime">--</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="sobre">
       <div class="section-header">
         <h2><i class="fas fa-user-code"></i> Sobre Mim</h2>

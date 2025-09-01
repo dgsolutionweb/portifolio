@@ -1862,3 +1862,348 @@ html {
     transform: none !important;
   }
 }
+
+/* Weather Widget Styles */
+.weather-widget {
+  padding: 2rem 0;
+  background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.weather-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.weather-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 170, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.weather-card:hover::before {
+  left: 100%;
+}
+
+.weather-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.weather-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.weather-content p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.btn-weather {
+  background: linear-gradient(135deg, var(--primary-color), #00b894);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-weather:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+}
+
+.btn-weather:active {
+  transform: scale(0.98);
+}
+
+.btn-weather.loading {
+  pointer-events: none;
+}
+
+.btn-weather.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.weather-alternative {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.weather-alternative p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.btn-secondary-small {
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-small:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.manual-location {
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.manual-location.hidden {
+  display: none;
+}
+
+.manual-location.show {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+}
+
+.btn-primary-small {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 50px;
+}
+
+.btn-primary-small:hover {
+  background: #00b894;
+  transform: translateY(-1px);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.weather-result {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 212, 170, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 212, 170, 0.2);
+  transition: all 0.5s ease;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.weather-result.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.weather-result.hidden {
+  display: none;
+}
+
+.temperature {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.detail-item i {
+  color: var(--primary-color);
+  width: 16px;
+}
+
+.weather-extra {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.feels-like {
+  margin-bottom: 0.5rem;
+}
+
+.update-time {
+  font-style: italic;
+}
+
+/* Weather Widget Mobile Styles */
+@media (max-width: 768px) {
+  .weather-widget {
+    padding: 1.5rem 0;
+  }
+  
+  .weather-card {
+    margin: 0 1rem;
+    padding: 1.5rem;
+  }
+  
+  .weather-icon {
+    font-size: 2.5rem;
+  }
+  
+  .weather-content h3 {
+    font-size: 1.3rem;
+  }
+  
+  .btn-weather {
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .btn-secondary-small {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+  .temperature {
+    font-size: 2.5rem;
+  }
+  
+  .weather-details {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  
+  .input-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .input-group input {
+    width: 100%;
+  }
+  
+  .btn-primary-small {
+    width: 100%;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .weather-card {
+    margin: 0 0.5rem;
+    padding: 1rem;
+  }
+  
+  .weather-content h3 {
+    font-size: 1.2rem;
+  }
+  
+  .weather-content p {
+    font-size: 0.9rem;
+  }
+  
+  .temperature {
+    font-size: 2rem;
+  }
+  
+  .detail-item {
+    font-size: 0.8rem;
+  }
+  
+  .weather-alternative p {
+    font-size: 0.85rem;
+  }
+  
+  .btn-secondary-small {
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+  }
+}

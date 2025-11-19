@@ -160,6 +160,12 @@ const Layout = ({ children }) => {
         }
 
         @media (max-width: 768px) {
+          .footer-content {
+            flex-direction: column;
+            gap: var(--spacing-md);
+            text-align: center;
+          }
+
           .nav {
             position: fixed;
             top: 0;

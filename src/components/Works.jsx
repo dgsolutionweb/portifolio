@@ -186,13 +186,39 @@ const Works = () => {
 
         .grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: var(--spacing-lg);
+          align-items: start;
         }
 
         @media (max-width: 768px) {
           .grid {
-            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+          }
+
+          .project-title {
+            font-size: 1.25rem;
+          }
+
+          .project-desc {
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+          }
+
+          .meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.35rem;
+          }
+
+          .image-container {
+            aspect-ratio: 4 / 3;
+            border-radius: 8px;
+          }
+
+          .card:focus-visible .overlay,
+          .card:active .overlay {
+            opacity: 1;
           }
         }
       `}</style>

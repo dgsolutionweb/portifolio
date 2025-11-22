@@ -2,6 +2,11 @@ import assistenteImg from '../assets/assistente.png';
 import pdvImg from '../assets/PDV.png';
 import storeImg from '../assets/store.png';
 import turmaImg from '../assets/turma.png';
+import mapsImg from '../assets/maps_extractor_project.png';
+import extrator1 from '../assets/extrator1.png';
+import extrator2 from '../assets/extrator2.png';
+
+
 
 export const translations = {
     pt: {
@@ -60,6 +65,15 @@ export const translations = {
                     tech: "Node.js • IA",
                     image: assistenteImg,
                     link: "https://wa.me/5517991129386"
+                },
+                {
+                    id: 5,
+                    title: "Extensão de Prospecção Maps",
+                    category: "Extensão Browser",
+                    description: "Extensão publica para navegadores, onde podem extrair dados das empresas da cidade atraves do google maps",
+                    tech: "Javascript • Chrome API",
+                    image: [extrator1, extrator2],
+                    link: "/ext-prospecao.zip"
                 }
             ]
         },
@@ -125,6 +139,15 @@ export const translations = {
                     tech: "Node.js • AI",
                     image: assistenteImg,
                     link: "https://wa.me/5517991129386"
+                },
+                {
+                    id: 5,
+                    title: "Maps Prospecting Extension",
+                    category: "Browser Extension",
+                    description: "Public browser extension to extract business data from city maps via Google Maps",
+                    tech: "Javascript • Chrome API",
+                    image: [extrator1, extrator2],
+                    link: "/ext-prospecao.zip"
                 }
             ]
         },

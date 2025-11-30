@@ -1,10 +1,15 @@
-import assistenteImg from '../assets/assistente.png';
+
 import pdvImg from '../assets/PDV.png';
 import storeImg from '../assets/store.png';
 import turmaImg from '../assets/turma.png';
 import mapsImg from '../assets/maps_extractor_project.png';
 import extrator1 from '../assets/extrator1.png';
 import extrator2 from '../assets/extrator2.png';
+import mecanicaImg from '../assets/mecanica.png';
+import medicamentoImg from '../assets/medicamento.png';
+import dgsolutionSiteImg from '../assets/dgsolution.png';
+import restauranteImg from '../assets/restaurante.png';
+import orcamentoImg from '../assets/orcamento.png';
 
 
 
@@ -57,15 +62,7 @@ export const translations = {
                     image: storeImg,
                     link: "https://store.consertapro.com/"
                 },
-                {
-                    id: 4,
-                    title: "AI CEP Assistant",
-                    category: "Bot IA",
-                    description: "Assistente inteligente de WhatsApp para consulta de CEPs.",
-                    tech: "Node.js • IA",
-                    image: assistenteImg,
-                    link: "https://wa.me/5517991129386"
-                },
+
                 {
                     id: 5,
                     title: "Extensão de Prospecção Maps",
@@ -74,6 +71,51 @@ export const translations = {
                     tech: "Javascript • Chrome API",
                     image: [extrator1, extrator2],
                     link: "/ext-prospecao.zip"
+                },
+                {
+                    id: 6,
+                    title: "Oficina Mecânica",
+                    category: "Website",
+                    description: "Site feito para oficina mecânica, utilizando Vite, React e TypeScript.",
+                    tech: "Vite • React • TypeScript",
+                    image: mecanicaImg,
+                    link: "https://oficina.dgsolutionweb.com"
+                },
+                {
+                    id: 7,
+                    title: "Medimind",
+                    category: "App Mobile",
+                    description: "Aplicativo de lembrete de medicamentos feito em React Native com Firebase.",
+                    tech: "React Native • Firebase",
+                    image: medicamentoImg,
+                    link: "https://lembrei.dgsolutionweb.com"
+                },
+                {
+                    id: 8,
+                    title: "DG Solution Institucional",
+                    category: "Website",
+                    description: "Site feito para empresa de desenvolvimento web.",
+                    tech: "React • Tailwind",
+                    image: dgsolutionSiteImg,
+                    link: "https://dgsolutionweb.com"
+                },
+                {
+                    id: 9,
+                    title: "Restaurante",
+                    category: "Website",
+                    description: "Site feito para um restaurante.",
+                    tech: "React • CSS",
+                    image: restauranteImg,
+                    link: "https://madremia.dgsolutionweb.com"
+                },
+                {
+                    id: 10,
+                    title: "OrçaFlow",
+                    category: "Plataforma SaaS",
+                    description: "Plataforma OrçaFlow feita para gerenciamento inteligente de orçamentos.",
+                    tech: "Next.js • Supabase",
+                    image: orcamentoImg,
+                    link: "https://orcaflow.dgsolutionweb.com"
                 }
             ]
         },
@@ -131,15 +173,7 @@ export const translations = {
                     image: storeImg,
                     link: "https://store.consertapro.com/"
                 },
-                {
-                    id: 4,
-                    title: "AI CEP Assistant",
-                    category: "AI Bot",
-                    description: "Intelligent WhatsApp assistant for city ZIP codes (CEP).",
-                    tech: "Node.js • AI",
-                    image: assistenteImg,
-                    link: "https://wa.me/5517991129386"
-                },
+
                 {
                     id: 5,
                     title: "Maps Prospecting Extension",
@@ -148,6 +182,51 @@ export const translations = {
                     tech: "Javascript • Chrome API",
                     image: [extrator1, extrator2],
                     link: "/ext-prospecao.zip"
+                },
+                {
+                    id: 6,
+                    title: "Mechanic Workshop",
+                    category: "Website",
+                    description: "Website built for a mechanic workshop, using Vite, React, and TypeScript.",
+                    tech: "Vite • React • TypeScript",
+                    image: mecanicaImg,
+                    link: "https://oficina.dgsolutionweb.com"
+                },
+                {
+                    id: 7,
+                    title: "Medimind",
+                    category: "Mobile App",
+                    description: "Medication reminder app built with React Native and Firebase.",
+                    tech: "React Native • Firebase",
+                    image: medicamentoImg,
+                    link: "https://lembrei.dgsolutionweb.com"
+                },
+                {
+                    id: 8,
+                    title: "DG Solution Corporate",
+                    category: "Website",
+                    description: "Website built for a web development company.",
+                    tech: "React • Tailwind",
+                    image: dgsolutionSiteImg,
+                    link: "https://dgsolutionweb.com"
+                },
+                {
+                    id: 9,
+                    title: "Restaurant",
+                    category: "Website",
+                    description: "Website built for a restaurant.",
+                    tech: "React • CSS",
+                    image: restauranteImg,
+                    link: "https://madremia.dgsolutionweb.com"
+                },
+                {
+                    id: 10,
+                    title: "OrçaFlow",
+                    category: "SaaS Platform",
+                    description: "OrçaFlow platform built for intelligent budget management.",
+                    tech: "Next.js • Supabase",
+                    image: orcamentoImg,
+                    link: "https://orcaflow.dgsolutionweb.com"
                 }
             ]
         },

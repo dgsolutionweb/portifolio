@@ -22,14 +22,14 @@ const Contact = () => {
           </motion.h2>
 
           <motion.a
-            href="mailto:dgsolutionweb@gmail.com"
+            href="mailto:douuglinha@gmail.com"
             className="email-link"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            dgsolutionweb@gmail.com
+            douuglinha@gmail.com
           </motion.a>
 
           <div className="form-container">

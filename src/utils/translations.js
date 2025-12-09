@@ -1,7 +1,6 @@
 
 import pdvImg from '../assets/PDV.png';
 import storeImg from '../assets/store.png';
-import turmaImg from '../assets/turma.png';
 import mapsImg from '../assets/maps_extractor_project.png';
 import extrator1 from '../assets/extrator1.png';
 import extrator2 from '../assets/extrator2.png';
@@ -10,6 +9,7 @@ import medicamentoImg from '../assets/medicamento.png';
 import dgsolutionSiteImg from '../assets/dgsolution.png';
 import restauranteImg from '../assets/restaurante.png';
 import orcamentoImg from '../assets/orcamento.png';
+import destacaaiImg from '../assets/destacaai.png';
 
 
 
@@ -46,13 +46,14 @@ export const translations = {
                 },
                 {
                     id: 2,
-                    title: "TurmaBox",
-                    category: "Plataforma EdTech",
-                    description: "Plataforma de gestão e compartilhamento de material acadêmico. Organize, colabore e acelere o aprendizado.",
-                    tech: "Next.js • PostgreSQL",
-                    image: turmaImg,
-                    link: "https://turmabox.com/"
+                    title: "DestacaAI",
+                    category: "Plataforma RH/Carreira",
+                    description: "Gere currículos gratuitamente, baixe em PDF e utilize um Agente de IA (Especialista Senior em Contratação) para analisar e recriar seu currículo a partir de PDF ou texto, melhorando sua apresentação profissional.",
+                    tech: "Next.js • Supabase • IA",
+                    image: destacaaiImg,
+                    link: "https://destacaai.dgsolutionweb.com"
                 },
+                
                 {
                     id: 3,
                     title: "ConsertaPro Store",
@@ -157,13 +158,14 @@ export const translations = {
                 },
                 {
                     id: 2,
-                    title: "TurmaBox",
-                    category: "EdTech Platform",
-                    description: "Academic material management and sharing platform. Organize, collaborate, and accelerate learning.",
-                    tech: "Next.js • PostgreSQL",
-                    image: turmaImg,
-                    link: "https://turmabox.com/"
+                    title: "DestacaAI",
+                    category: "HR/Career Platform",
+                    description: "Create resumes for free, download as PDF, and use an AI Agent (Senior Hiring Specialist) to analyze and rebuild your resume from PDF or text, enhancing your professional presentation.",
+                    tech: "Next.js • Supabase • AI",
+                    image: destacaaiImg,
+                    link: "https://destacaai.dgsolutionweb.com"
                 },
+                
                 {
                     id: 3,
                     title: "ConsertaPro Store",

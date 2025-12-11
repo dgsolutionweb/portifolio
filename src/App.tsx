@@ -12,7 +12,7 @@ import { LanguageProvider } from './context/LanguageContext';
 function App() {
   return (
     <LanguageProvider>
-      <div className="app">
+      <div>
         <Background />
         <Layout>
           <Hero />

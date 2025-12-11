@@ -13,6 +13,8 @@ import destacaaiImg from '../assets/destacaai.png';
 
 
 
+export type Translation = typeof translations.pt;
+
 export const translations = {
     pt: {
         nav: {
@@ -53,7 +55,7 @@ export const translations = {
                     image: destacaaiImg,
                     link: "https://destacaai.dgsolutionweb.com"
                 },
-                
+
                 {
                     id: 3,
                     title: "ConsertaPro Store",
@@ -165,7 +167,7 @@ export const translations = {
                     image: destacaaiImg,
                     link: "https://destacaai.dgsolutionweb.com"
                 },
-                
+
                 {
                     id: 3,
                     title: "ConsertaPro Store",

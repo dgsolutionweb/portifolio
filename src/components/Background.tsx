@@ -2,16 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import p5 from 'p5';
 
 const Background = () => {
-    const renderRef = useRef();
+    const renderRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        let myP5 = new p5((p) => {
-            let particles = [];
+        if (!renderRef.current) return;
+
+        let myP5 = new p5((p: p5) => {
+            let particles: Particle[] = [];
             const numParticles = 200;
             const noiseScale = 0.005;
 
             p.setup = () => {
-                p.createCanvas(p.windowWidth, p.windowHeight).parent(renderRef.current);
+                p.createCanvas(p.windowWidth, p.windowHeight).parent(renderRef.current!);
                 for (let i = 0; i < numParticles; i++) {
                     particles.push(new Particle(p));
                 }
@@ -35,7 +37,14 @@ const Background = () => {
             };
 
             class Particle {
-                constructor(p) {
+                p: p5;
+                pos: p5.Vector;
+                vel: p5.Vector;
+                acc: p5.Vector;
+                maxSpeed: number;
+                prevPos: p5.Vector;
+
+                constructor(p: p5) {
                     this.p = p;
                     this.pos = p.createVector(p.random(p.width), p.random(p.height));
                     this.vel = p.createVector(0, 0);
@@ -52,7 +61,7 @@ const Background = () => {
                     this.acc.mult(0);
                 }
 
-                follow(scale) {
+                follow(scale: number) {
                     let angle = this.p.noise(this.pos.x * scale, this.pos.y * scale, this.p.frameCount * 0.002) * this.p.TWO_PI * 2;
                     let force = p5.Vector.fromAngle(angle);
                     force.mult(0.5);
@@ -102,7 +111,7 @@ const Background = () => {
         };
     }, []);
 
-    return <div ref={renderRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -1, pointerEvents: 'none' }} />;
+    return <div ref={renderRef} className="fixed top-0 left-0 -z-10 pointer-events-none" />;
 };
 
 export default Background;

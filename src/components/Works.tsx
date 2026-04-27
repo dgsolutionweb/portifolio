@@ -56,6 +56,8 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
             key={currentImageIndex}
             src={images[currentImageIndex]}
             alt={project.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-contain absolute top-0 left-0 transition-transform duration-300 group-hover:scale-105"
             initial={{ opacity: 0.8 }}
             animate={{ opacity: 1 }}

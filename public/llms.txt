@@ -1,0 +1,25 @@
+# Douglas Rodrigues Portfolio
+> Official portfolio of Douglas Rodrigues, focused on web development and AI integrations for business solutions.
+
+## Canonical URL
+- https://douglasrodrigues.dev/
+
+## Site scope
+- Primary language: Portuguese (pt-BR), with English content available through the interface.
+- Content includes: professional profile, technology stack, selected projects, and contact channels.
+
+## Key URL
+- https://douglasrodrigues.dev/ : Main portfolio page with profile, projects, and contact.
+
+## External projects referenced on the portfolio
+- https://destacaai.dgsolutionweb.com
+- https://ceps-fera.vercel.app
+- https://oficina.dgsolutionweb.com
+- https://lembrei.dgsolutionweb.com
+- https://madremia.dgsolutionweb.com
+
+## Preferred citation
+- Douglas Rodrigues — Portfolio. https://douglasrodrigues.dev/
+
+## AI usage policy
+- Public content may be indexed and summarized by AI systems with attribution to Douglas Rodrigues and the canonical URL.
